@@ -2,7 +2,7 @@
 <animNode>
 	<m_Name>_act3_shove</m_Name>
 	<!-- <m_AnimName>Bob_AttackPunch01_Hit</m_AnimName> -->
-	 <m_AnimName>Zombie_DoorShoulder</m_AnimName> 
+	 <m_AnimName>Zombie_Bite</m_AnimName> 
 	
 	<m_Priority>4</m_Priority>
 	<m_deferredBoneAxis>Y</m_deferredBoneAxis>
