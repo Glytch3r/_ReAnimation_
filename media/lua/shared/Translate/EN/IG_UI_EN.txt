@@ -68,4 +68,15 @@ IGUI_EN = {
 	IGUI_Emote_Yawn = "Yawn",
 	IGUI_Emote_Vomit = "Vomit",
 	IGUI_Emote_??? = "???",
+
+
+
+
+
+
+
+	IGUI_PostDeath_RespawnAsZed = "CONTINUE AS A ZOMBIE",
+
+
+
 }

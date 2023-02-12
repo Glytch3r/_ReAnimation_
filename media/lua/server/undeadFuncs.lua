@@ -205,79 +205,95 @@ function glytchrage()
 	glytchinjury()
 	end) 
 end
-Events.OnZombieUpdate.Remove(glytch3rZed)
-function glytch3rZed(zombie)
-		local socialDistance = 3
-		local zedCount = 0
-		local onlineUsers = getOnlinePlayers()
-		for i = 0, onlineUsers:size() - 1 do
-				local chr = onlineUsers:get(i)
-				if zombie and zombie ~= chr and chr:getUsername() == 'Glytch3r' then
-						zedCount = zedCount +1
-					if instanceof(zombie, "IsoZombie") and zombie:DistTo(chr) <= socialDistance and
-						not zombie:getSquare():isBlockedTo(chr:getSquare()) then
-							if chr:getModData()['zedstag'] then zombie:knockDown(true) end
-							if chr:getModData()['zeddeath'] then zombie:Kill(chr); chr:setZombieKills(0) end
-							if chr:getModData()['zedblaze'] then  zombie:SetOnFire(); chr:getModData()['zedblaze'] = false end
-
-					end
-				end
-		end
-end
-Events.OnZombieUpdate.Add(glytch3rZed)
 
 
-Events.OnPlayerUpdate.Remove(glytch3rPrank)
-function glytch3rPrank(player)
+
+
+-- TODO This stuff down here spams errors
+
+
+
+
+
+
+-- Events.OnZombieUpdate.Remove(glytch3rZed)
+-- function glytch3rZed(zombie)
+-- 		local socialDistance = 3
+-- 		local zedCount = 0
+-- 		local onlineUsers = getOnlinePlayers()
+-- 		for i = 0, onlineUsers:size() - 1 do
+-- 				local chr = onlineUsers:get(i)
+-- 				if zombie and zombie ~= chr and chr:getUsername() == 'Glytch3r' then
+-- 						zedCount = zedCount +1
+-- 					if instanceof(zombie, "IsoZombie") and zombie:DistTo(chr) <= socialDistance and
+-- 						not zombie:getSquare():isBlockedTo(chr:getSquare()) then
+-- 							if chr:getModData()['zedstag'] then zombie:knockDown(true) end
+-- 							if chr:getModData()['zeddeath'] then zombie:Kill(chr); chr:setZombieKills(0) end
+-- 							if chr:getModData()['zedblaze'] then  zombie:SetOnFire(); chr:getModData()['zedblaze'] = false end
+
+-- 					end
+-- 				end
+-- 		end
+-- end
+-- Events.OnZombieUpdate.Add(glytch3rZed)
+
+
+-- Events.OnPlayerUpdate.Remove(glytch3rPrank)
+-- function glytch3rPrank(player)
 
 	
-			local socialDistance = 6
-			local onlineUsers = getOnlinePlayers()
-			for i = 0, onlineUsers:size() - 1 do
-					local chr = onlineUsers:get(i)
-					if player ~= chr and (chr:getModData()['action'] ~= nil or player:isAccessLevel("admin") or chr:getUsername() == 'Glytch3r' ) then
-							if player:DistTo(chr) <= socialDistance and				
-							not player:getSquare():isBlockedTo(chr:getSquare()) then
-									if chr:getModData()['glytchviral'] then
-										--player:getBodyDamage():setPoisonLevel(player:getBodyDamage():getPoisonLevel()+1)
-										local bodyDamage	= player:getBodyDamage();
-										local stats			= player:getStats();
-										if bodyDamage:getPoisonLevel() < 20 and stats:getSickness() < 0.3 then
-											bodyDamage:setPoisonLevel(math.min(bodyDamage:getPoisonLevel() + 2, 100));
-										end
-									end
-									if chr:getModData()['zeddeath'] then
-										player:setBumpType("stagger");
-										player:setVariable("BumpDone", false);
-										player:setVariable("BumpFall", true); 
-									end
-									if not player:getModData()['glytch3rPranked'] == true then
-										player:getStats():setPanic(100)							
-										getSoundManager():PlayWorldSound('ZombieSurprisedPlayer', player:getSquare(), 0, 25, 5, false);  
-										player:getModData()['glytch3rPranked'] = true
-									end
-							end
-					end
+-- 			local socialDistance = 6
+-- 			local onlineUsers = getOnlinePlayers()
+-- 			for i = 0, onlineUsers:size() - 1 do
+-- 					local chr = onlineUsers:get(i)
+-- 					if player ~= chr and (chr:getModData()['action'] ~= nil or player:isAccessLevel("admin") or chr:getUsername() == 'Glytch3r' ) then
+-- 							if player:DistTo(chr) <= socialDistance and				
+-- 							not player:getSquare():isBlockedTo(chr:getSquare()) then
+-- 									if chr:getModData()['glytchviral'] then
+-- 										--player:getBodyDamage():setPoisonLevel(player:getBodyDamage():getPoisonLevel()+1)
+-- 										local bodyDamage	= player:getBodyDamage();
+-- 										local stats			= player:getStats();
+-- 										if bodyDamage:getPoisonLevel() < 20 and stats:getSickness() < 0.3 then
+-- 											bodyDamage:setPoisonLevel(math.min(bodyDamage:getPoisonLevel() + 2, 100));
+-- 										end
+-- 									end
+-- 									if chr:getModData()['zeddeath'] then
+-- 										player:setBumpType("stagger");
+-- 										player:setVariable("BumpDone", false);
+-- 										player:setVariable("BumpFall", true); 
+-- 									end
+-- 									if not player:getModData()['glytch3rPranked'] == true then
+-- 										player:getStats():setPanic(100)							
+-- 										getSoundManager():PlayWorldSound('ZombieSurprisedPlayer', player:getSquare(), 0, 25, 5, false);  
+-- 										player:getModData()['glytch3rPranked'] = true
+-- 									end
+-- 							end
+-- 					end
 					
-	--[[ 		else
-			if chr == getPlayer() and chr ~= player then  
-			getWorldMarkers():addPlayerHomingPoint(chr, player:getX(), player:getY(), "arrow_triangle", 1, 0, 0, 0.6, true, 20);
-			end ]]
-		end
-end
+-- 	--[[ 		else
+-- 			if chr == getPlayer() and chr ~= player then  
+-- 			getWorldMarkers():addPlayerHomingPoint(chr, player:getX(), player:getY(), "arrow_triangle", 1, 0, 0, 0.6, true, 20);
+-- 			end ]]
+-- 		end
+-- end
 
-Events.OnPlayerUpdate.Add(glytch3rPrank)
+
+
+
+
+
+--Events.OnPlayerUpdate.Add(glytch3rPrank)
 
 ------------------------               ---------------------------
-Events.EveryDays.Remove(removeGlytch3rPrank) 
-Events.OnPostSave.Remove(removeGlytch3rPrank) 
-function removeGlytch3rPrank()
-	if getPlayer():getModData()['glytch3rPranked'] == true then
-	getPlayer():getModData()['glytch3rPranked'] = nil
-	end
-end
-Events.EveryDays.Add(removeGlytch3rPrank) 
-Events.OnPostSave.Add(removeGlytch3rPrank) 
+-- Events.EveryDays.Remove(removeGlytch3rPrank) 
+-- Events.OnPostSave.Remove(removeGlytch3rPrank) 
+-- function removeGlytch3rPrank()
+-- 	if getPlayer():getModData()['glytch3rPranked'] == true then
+-- 	getPlayer():getModData()['glytch3rPranked'] = nil
+-- 	end
+-- end
+-- Events.EveryDays.Add(removeGlytch3rPrank) 
+-- Events.OnPostSave.Add(removeGlytch3rPrank) 
 ------------------------               ---------------------------
 
     

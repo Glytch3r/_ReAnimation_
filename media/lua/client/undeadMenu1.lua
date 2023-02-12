@@ -219,6 +219,11 @@ function ReanimationMenu.press(key)
 	if  (key == getCore():getKey("Emote") or key == getCore():getKey("Shout")) then
         if not (getCore():getDebug() or isAdmin()) then return; end   
         if getPlayer():getModData()['glytchprint'] then end
+
+
+        -- TODO Move this
+
+
         getPlayer():playEmote("isZedScream") 
         glytchrage()
         return key
