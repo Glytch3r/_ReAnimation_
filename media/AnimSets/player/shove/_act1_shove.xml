@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <animNode>
 	<m_Name>_act1_shove</m_Name>
-	<m_AnimName>Bob_AttackPunch03_Hit</m_AnimName>
+	<m_AnimName>Bob_AttackThrowMolotov</m_AnimName>
 	<m_Priority>4</m_Priority>
 	<m_deferredBoneAxis>Y</m_deferredBoneAxis>
 	<m_Looped>false</m_Looped>

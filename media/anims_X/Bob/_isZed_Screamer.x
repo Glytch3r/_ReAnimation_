@@ -45,7 +45,7 @@ template DeclData {
 
 
 AnimTicksPerSecond {
- 24;
+ 4800;
 }
 
 Frame Dummy01 {

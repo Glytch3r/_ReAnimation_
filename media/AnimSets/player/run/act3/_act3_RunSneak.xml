@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <animNode>
 	<m_Name>_act3_RunSneak</m_Name>
-	<m_AnimName>Zombie_Walk5</m_AnimName>
+	<m_AnimName>Zombie_Crawl</m_AnimName>
 	<m_deferredBoneAxis>Y</m_deferredBoneAxis>
 	<m_SpeedScale>0.92</m_SpeedScale>
 	<m_BlendTime>0.50</m_BlendTime>
