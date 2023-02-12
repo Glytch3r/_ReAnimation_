@@ -88,8 +88,7 @@ function AnimMenu:onClick(button)
     if not isServer() and not isClient() then
         print("This is SP, so no server stuff for you")
     else
-        print("why ")
-        sendClientCommand(player, "GlytchAnimations", "NotifyAnimation", {player:getOnlineID(), op_title_fix})
+        sendClientCommand(player, "GlytchAnimations", "NotifyAnimation", {sender = player:getOnlineID(), action = op_title_fix})
     end
 
 	

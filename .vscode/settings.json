@@ -1,0 +1,9 @@
+{
+    "Lua.diagnostics.globals": [
+        "sendServerCommand",
+        "Events",
+        "getPlayerByOnlineID",
+        "getPlayer",
+        "isClient"
+    ]
+}
