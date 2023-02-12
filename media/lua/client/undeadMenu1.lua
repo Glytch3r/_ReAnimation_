@@ -218,38 +218,8 @@ function ReanimationMenu.press(key)
     end
 	if  (key == getCore():getKey("Emote") or key == getCore():getKey("Shout")) then
         if not (getCore():getDebug() or isAdmin()) then return; end   
-        timer:Simple(0.5, function() 
-        getPlayer():playEmote("Vomit2")   
-        end) 
-        timer:Simple(0.3, function() 
-        getPlayer():playEmote("Vomit2")   
-        end) 
-        timer:Simple(0.4, function() 
-        getPlayer():playEmote("ScrambleFloorIdle") 
-        end) 
-        timer:Simple(1.1, function() 
-        getPlayer():playEmote("Limp") 
-        end) 
-        timer:Simple(0.5, function() 
-        getPlayer():playEmote("GetUp3") 
-        end)  
-        timer:Simple(0.8, function() 
-        getPlayer():playEmote("Spooked1") 
-        end) 
-        timer:Simple(1.3, function() 
-        getPlayer():playEmote("_oneshot10") 
-        end) 
-        
-        
-        
-        
-        
- --[[        timer:Simple(0.5, function() 
-        getPlayer():playEmote("_idleLoop3") 
-        end) 
-        timer:Simple(0.1, function() 
-        getPlayer():playEmote("passoutfront") 
-        end)  ]]
+        if getPlayer():getModData()['glytchprint'] then end
+        getPlayer():playEmote("isZedScream") 
         glytchrage()
         return key
     end
