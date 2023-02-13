@@ -67,6 +67,16 @@ function ISPostDeathUI:onRespawnAsZed()
 	-- for i,v in pairs(self.charCreationProfession.listboxTraitSelected.items) do
 	-- 	getWorld():addLuaTrait(v.item:getType())
 	-- end
+
+	local player = getPlayer()
+	local player_cell = player:getCell()
+
+	getWorld():setLuaSpawnCellX(player_cell:getWorldX())
+	getWorld():setLuaSpawnCellY(player_cell:getWorldY())
+	getWorld():setLuaPosX(player:getX())
+	getWorld():setLuaPosY(player:getY())
+	getWorld():setLuaPosZ(player:getZ())
+
 	MainScreen.instance.avatar = nil
 
 
