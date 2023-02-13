@@ -160,20 +160,7 @@ local function StartZedScream()
 	local pl = getPlayer()
 	getSoundManager():PlayWorldSound('SOSv1', pl:getSquare(), 0, 5, 5, false)
 	addSound(pl, pl:getX(), pl:getY(), pl:getZ(), 50, 1)
-
-	-- TODO what is this?
-	pl:getModData()['zeddeath'] = true
-	timer:Simple(5, function()
-		pl:getModData()['zeddeath'] = false
-		print("boom");
-		-- glytchinjury()
-		-- glytchinjury()
-	end)
-
 end
-
-
-
 
 
 
@@ -210,8 +197,8 @@ function glytchinjury()
 	end
 end
 
-Events.OnPlayerUpdate.Remove(undeadRecovery)
-Events.OnTick.Remove(undeadRecovery)
+
+
 local tickTock = 0
 
 
@@ -230,9 +217,7 @@ function undeadRecovery(pl)
 	else
 		pl:setHaloNote(tostring(math.floor(pl:getBodyDamage():getOverallBodyHealth())))
 	end
-
-
-	if pl and (pl:isAccessLevel('admin') or pl:getUsername() == "Glytch3r") and pl:getModData()['undeadheal'] then
+	if pl and pl:getModData()['undeadheal'] then
 		pl:getStats():setHunger(0)
 		pl:getStats():setFatigue(0)
 		pl:getStats():setBoredom(0)
@@ -258,149 +243,14 @@ function undeadRecovery(pl)
 		--pl:getBodyDamage():getHealth()
 	end
 end
-
--- TODO Change it to a better name
-function glytchrage()
-	local pl = getPlayer()
-	getSoundManager():PlayWorldSound('SOSv1', pl:getSquare(), 0, 5, 5, false);
-	addSound(pl, pl:getX(), pl:getY(), pl:getZ(), 50, 1)
-
-	pl:getModData()['zeddeath'] = true
-	timer:Simple(5, function()
-		pl:getModData()['zeddeath'] = false
-		print("boom");
-		-- glytchinjury()
-		-- glytchinjury()
-	end)
-end
-
--- TODO This stuff down here spams errors
+Events.OnPlayerUpdate.Remove(undeadRecovery)
 
 
 
 
 
 
--- Events.OnZombieUpdate.Remove(glytch3rZed)
--- function glytch3rZed(zombie)
--- 		local socialDistance = 3
--- 		local zedCount = 0
--- 		local onlineUsers = getOnlinePlayers()
--- 		for i = 0, onlineUsers:size() - 1 do
--- 				local chr = onlineUsers:get(i)
--- 				if zombie and zombie ~= chr and chr:getUsername() == 'Glytch3r' then
--- 						zedCount = zedCount +1
--- 					if instanceof(zombie, "IsoZombie") and zombie:DistTo(chr) <= socialDistance and
--- 						not zombie:getSquare():isBlockedTo(chr:getSquare()) then
--- 							if chr:getModData()['zedstag'] then zombie:knockDown(true) end
--- 							if chr:getModData()['zeddeath'] then zombie:Kill(chr); chr:setZombieKills(0) end
--- 							if chr:getModData()['zedblaze'] then  zombie:SetOnFire(); chr:getModData()['zedblaze'] = false end
-
--- 					end
--- 				end
--- 		end
--- end
--- Events.OnZombieUpdate.Add(glytch3rZed)
-
-
--- Events.OnPlayerUpdate.Remove(glytch3rPrank)
--- function glytch3rPrank(player)
-
-
--- 			local socialDistance = 6
--- 			local onlineUsers = getOnlinePlayers()
--- 			for i = 0, onlineUsers:size() - 1 do
--- 					local chr = onlineUsers:get(i)
--- 					if player ~= chr and (chr:getModData()['action'] ~= nil or player:isAccessLevel("admin") or chr:getUsername() == 'Glytch3r' ) then
--- 							if player:DistTo(chr) <= socialDistance and				
--- 							not player:getSquare():isBlockedTo(chr:getSquare()) then
--- 									if chr:getModData()['glytchviral'] then
--- 										--player:getBodyDamage():setPoisonLevel(player:getBodyDamage():getPoisonLevel()+1)
--- 										local bodyDamage	= player:getBodyDamage();
--- 										local stats			= player:getStats();
--- 										if bodyDamage:getPoisonLevel() < 20 and stats:getSickness() < 0.3 then
--- 											bodyDamage:setPoisonLevel(math.min(bodyDamage:getPoisonLevel() + 2, 100));
--- 										end
--- 									end
--- 									if chr:getModData()['zeddeath'] then
--- 										player:setBumpType("stagger");
--- 										player:setVariable("BumpDone", false);
--- 										player:setVariable("BumpFall", true);
--- 									end
--- 									if not player:getModData()['glytch3rPranked'] == true then
--- 										player:getStats():setPanic(100)							
--- 										getSoundManager():PlayWorldSound('ZombieSurprisedPlayer', player:getSquare(), 0, 25, 5, false);
--- 										player:getModData()['glytch3rPranked'] = true
--- 									end
--- 							end
--- 					end
-
--- 	--[[ 		else
--- 			if chr == getPlayer() and chr ~= player then
--- 			getWorldMarkers():addPlayerHomingPoint(chr, player:getX(), player:getY(), "arrow_triangle", 1, 0, 0, 0.6, true, 20);
--- 			end ]]
--- 		end
--- end
 
 
 
 
-
-
---Events.OnPlayerUpdate.Add(glytch3rPrank)
-
-------------------------               ---------------------------
--- Events.EveryDays.Remove(removeGlytch3rPrank)
--- Events.OnPostSave.Remove(removeGlytch3rPrank)
--- function removeGlytch3rPrank()
--- 	if getPlayer():getModData()['glytch3rPranked'] == true then
--- 	getPlayer():getModData()['glytch3rPranked'] = nil
--- 	end
--- end
--- Events.EveryDays.Add(removeGlytch3rPrank)
--- Events.OnPostSave.Add(removeGlytch3rPrank)
-------------------------               ---------------------------
-
-
-
-Events.OnPlayerDeath.Remove(glytch3rRIP)
-function glytch3rRIP(chr)
-	if chr:getUsername() == "Glytch3r" or chr:isAccessLevel("Admin") then
-		chr:getSquare():AddWorldInventoryItem("EyeSOS.pvpRewardStub", 0.5, 0.5, 0)
-
-		ISInventoryPage.dirtyUI()
-		if chr then
-			--[[             getPlayerInventory(chr:getPlayerNum()):refreshBackpacks()
-            getPlayerLoot(chr:getPlayerNum()):refreshBackpacks() ]]
-			SendCommandToServer(string.format("/thunder"))
-			getSoundManager():PlayWorldSound('ZombieSurprisedPlayer', chr:getSquare(), 0, 5, 5, false);
-			getSoundManager():PlayWorldSound('SOSs2', chr:getSquare(), 0, 20, 5, false);
-			addSound(chr, chr:getX(), chr:getY(), chr:getZ(), 120, 1)
-			SendCommandToServer("/servermsg \"" .. chr:getUsername() .. ' has been slain' .. "\"");
-		end
-	end
-end
-
-Events.OnPlayerDeath.Add(glytch3rRIP)
-
---[[ getPlayer():getSquare():AddWorldInventoryItem("EyeSOS.pvpRewardStub", 0.1, 0.1, getPlayer():getZ(), true);
-		ISInventoryPage.dirtyUI() ]]
-function setInstaKiller()
-	if not getPlayer():getPrimaryHandItem() == nil then
-		local toSet = getPlayer():getPrimaryHandItem()
-		if not toSet:getModData()['instaKiller'] then
-			toSet:getModData()['instaKiller'] = true
-		end
-	end
-end
-
---[[ Events.OnWeaponHitCharacter.Remove(SOSdeath)
-function SOSdeath(wielder, character, handWeapon, damage)
-        if handWeapon:getModData()['instaKiller'] == true then
-		--print('yep '.. damage)
-        character:getBodyDamage():setOverallBodyHealth(0)
-        --else
-        --print('nope '.. damage)
-        end
-end
-Events.OnWeaponHitCharacter.Add(SOSdeath) ]]

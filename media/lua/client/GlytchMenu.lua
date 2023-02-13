@@ -16,88 +16,6 @@ function GlytchMenu.openPanel(playerObj)
     end   GlytchMenu.instance = window
 end
 
---[[ 
-function ISCheatPanelUI.OnOpenPanel()
-    if ISCheatPanelUI.instance==nil then
-        ISCheatPanelUI.instance = ISCheatPanelUI:new (50, 200, 212, 350, getPlayer());
-        ISCheatPanelUI.instance:initialise();
-    end
-
-    ISCheatPanelUI.instance:addToUIManager();
-    ISCheatPanelUI.instance:setVisible(true);
-
-    return ISCheatPanelUI.instance;
-end ]]
-------------------------               ---------------------------
-
-
-
---[[ 
-function getCar()
-local car = nil
-if getPlayer():getVehicle() then car = getPlayer():getVehicle() 
-elseif getPlayer():getNearVehicle() then car = getPlayer():getNearVehicle()
-elseif  getPlayer():getUseableVehicle() then car = getPlayer():getUseableVehicle() 
-end
-return car
-end ]]
-
--- local function adminDeleteOnDeath()
-	-- if isAdmin(getPlayer()) then 
-			-- getPlayer():clearWornItems();
-			-- getPlayer():getInventory():clear();
-			-- getPlayer():resetModel();
-	-- end		
--- end
--- Events.OnCharacterDeath.Add(adminDeleteOnDeath)
-
---[[ 
-local function despawnTreesArea()cleanArea()
-local rad = 55
-	local pl = getPlayer()
-	local x, y, z = pl:getX(), pl:getY(), pl:getZ()
-	for xx = -rad, rad do
-	for yy = -rad, rad do
-	local square =  pl:getCell():getGridSquare(x + xx, y + yy, z)
-		for i=0, square:getObjects():size()-1 do
-		local obj = square:getObjects():get(i)
-		if instanceof(obj, "IsoTree") then
-			sledgeDestroy(obj)
-			obj:getSquare():transmitRemoveItemFromSquare(obj)
-		end
-		end
-	end
-	end
-end
-local walktype = 1
-function glytchZedWalk()
-if walktype == 6 then getPlayer():playEmote("Crawl") end
-if walktype == 5 then getPlayer():playEmote("Crawl2") end
-if walktype == 4 then getPlayer():playEmote("Walk002") end
-if walktype == 3 then getPlayer():playEmote("Walk003") end
-if walktype == 2 then getPlayer():playEmote("Walk005") end
-if walktype == 1 then getPlayer():playEmote("Sprint002") end
-
-walktype = walktype + 1
-if  walktype == 7 then  walktype = 1 end
-getPlayer():setHaloNote(walktype) 
-end
-Events.OnZombieUpdate.Remove(onZombiecontactDeath);
-local function onZombiecontactDeath(zombie)
-
-  if getPlayer():getModData()['contactDeath'] == true then
-  local player = getPlayer()
-				  --if player ~= zombie then
-		if player:DistTo(zombie:getSquare()) <= 3 and not player:getSquare():isBlockedTo(zombie:getSquare()) then
-			zombie:setHealth(0)	
-		end
-               -- end
-	  if getPlayer():getSquare() == zombie:getSquare() then
-		 zombie:setHealth(0)	  		 
-	  end
-  end
-end
-Events.OnZombieUpdate.Add(onZombiecontactDeath); ]]
 
 local function cleanArea()
 local rad = 5
@@ -212,36 +130,17 @@ getPlayer():getDescriptor():setSurname(" ")
 getPlayer():setUsername("")
 getPlayer():setDisplayName("")
 getPlayer():setShowAdminTag(false);
-sendPlayerStatsChange(ISPlayerStatsUI.instance.char);
+--[[ sendPlayerStatsChange(ISPlayerStatsUI.instance.char);
 local onlinePlayers = getOnlinePlayers()
 for i=0, onlinePlayers:size()-1 do
 	local aPlayer = getOnlinePlayers():get(i)
 	sendPlayerExtraInfo(aPlayer)
-end
+end ]]
 
 --end----------------------            ---------------------------end
     elseif button.internal == opTitle5 then print(opTitle5); getPlayer():Say(opTitle5) 
 --start----------------------         ---------------------------start
 BrushToolManager.openPanel(getPlayer())
-
--- local car = nil
-    -- if getPlayer():getVehicle() then car = getPlayer():getVehicle() 
-    -- elseif getPlayer():getNearVehicle() then car = getPlayer():getNearVehicle()
-    -- elseif  getPlayer():getUseableVehicle() then car = getPlayer():getUseableVehicle() 
-	-- else car = nil
-    -- end
-
--- if not car == nil  then
--- sendClientCommand(getPlayer(), "vehicle", "remove", { car = car:getId() })
--- end
-
--- local randS = getScriptManager():getAllVehicleScripts()
--- local randV = ZombRand(1, randS:size())
--- local randM = scripts:get(randV):getModule():getName()
--- local randN = scripts:get(randV):getName()
--- local spawnV = randM..'.'..randN
--- local command = "/addvehicle ".. spawnV .. ' '.. getPlayer():getUsername() 
--- SendCommandToServer(command)
 
 
 
@@ -250,14 +149,14 @@ BrushToolManager.openPanel(getPlayer())
     elseif button.internal == opTitle6 then print(opTitle6); getPlayer():Say(opTitle6) 
 --start----------------------         ---------------------------start
 	getPlayer():setGodMod(false);
-	getPlayer():getBodyDamage():setOverallBodyHealth(0)
+	getPlayer():Kill(getPlayer())
 
 --end----------------------            ---------------------------end
     elseif button.internal == opTitle7 then print(opTitle7); getPlayer():Say(opTitle7) 
 --start----------------------         ---------------------------start
--- getSoundManager():PlayWorldSound("ZombieSurprisedPlayer", getPlayer():getSquare(), 0, radius, volume, _iswav); 
-			getSoundManager():PlayWorldSound('ZombieSurprisedPlayer', getPlayer():getSquare(), 0, 55, 10, false);  
-			--addSound(getPlayer(), getPlayer():getX(), getPlayer():getY(), getPlayer():getZ(), 15, 1)
+
+	getSoundManager():PlayWorldSound('ZombieSurprisedPlayer', getPlayer():getSquare(), 0, 55, 10, false);  
+
 
 --end----------------------            ---------------------------end
     elseif button.internal == opTitle8 then print(opTitle8); getPlayer():Say(opTitle8) 
@@ -271,55 +170,10 @@ BrushToolManager.openPanel(getPlayer())
 --end----------------------            ---------------------------end
     elseif button.internal == opTitle9 then print(opTitle9); getPlayer():Say(opTitle9) 
 --start----------------------         ---------------------------start
--- getPlayer():getInventory():AddItem('Base.Lighter')
--- getPlayer():getInventory():AddItem('Base.Cigarettes')
-
--- local item = InventoryItemFactory.CreateItem("Base.Apple")
--- item:setAge()
--- item:setRotten(true)
--- getPlayer():getInventory():AddItem(item)
--- ISInventoryPage.renderDirty = true;
-
-glytchLight()
-
-		-- local Script = ScriptManager.instance:getItem("Base.Torch")
-		-- Script:DoParam("AttachmentType = Knife")		
-		-- Script:DoParam("DisplayName	=	GlytchLight")
-		-- Script:DoParam("Tooltip	=	GlytchLight")
-		-- Script:DoParam("Icon	=	Apple")			
-		-- Script:DoParam("StaticModel = DeadRat")	
-		-- local item = InventoryItemFactory.CreateItem("Base.Torch")
-		-- getPlayer():getInventory():AddItem(item)
-		-- getPlayer():setPrimaryHandItem(nil)
-		-- item:setUseDelta(0.0000000001) 
-		-- item:setActivated(not item:isActivated())
-		-- item:setAttachedSlot(2);
-		-- getPlayer():setAttachedItem("Belt Left", item);
-		-- item:setAttachedSlotType("Belt Left");
-		-- item:setAttachedToModel("Belt Left");
-		-- getPlayer():getInventory():setDrawDirty(true);
-		-- ISInventoryPage.renderDirty = true;
-		-- ISInventoryPage.dirtyUI();
-		-- getPlayer():resetModel();
-		-- getPlayerLoot(getPlayer():getPlayerNum()):refreshBackpacks();
-		-- local Script = ScriptManager.instance:getItem("Base.HuntingKnife")
--- Script:DoParam("StaticModel = DeadRat")	
--- Script:DoParam("SwingSound = FluteSwing")	
--- Script:DoParam("HitSound = FluteHit_")	
--- Script:DoParam("SwingAnim = Bat")	
--- Script:DoParam("MinRange = 0")	
--- Script:DoParam("MaxRange = 100")	
--- Script:DoParam("MaxHitCount = 12")	
--- local item = InventoryItemFactory.CreateItem("Base.HuntingKnife")
--- getPlayer():getInventory():AddItem(item)
--- item:setName("Glytch3rs Knife"); 
--- item:setMinDamage(100);
--- item:setMaxDamage(100);
--- getPlayerLoot(0):refreshBackpacks()
+local pl = getPlayer(); pl:getCell():addLamppost(IsoLightSource.new(pl:getX(), pl:getY(), pl:getZ(), 255, 255, 255, 255)) 
 --end----------------------            ---------------------------end
     elseif button.internal == opTitle10 then print(opTitle10); getPlayer():Say(opTitle10) 
 --start----------------------         ---------------------------start
-
 
 getCar():flipUpright()
 
@@ -346,54 +200,18 @@ spawnv()
 --end----------------------            ---------------------------end
     elseif button.internal == opTitle15 then print(opTitle15); getPlayer():Say(opTitle15) 
 --start----------------------            ---------------------------start
-		local player = getPlayer() 
-		createHordeFromTo(player:getX() + ZombRand(-2,2), player:getY() + ZombRand(-2,2), player:getX(), player:getY(), 5);
-			createHordeInAreaTo(x, y, x2 - x, y2 - y, player:getX(), player:getY(), player:getZ());
-				local player = getPlayer() ;		createHordeFromTo(player:getX(), player:getY(), player:getX(), player:getY(), player:getZ());
-	 createHordeFromTo(player:getX(), player:getY(), player:getX(), player:getY(), 5);
---[[ local player = getPlayer()
-local bodyDamage = player:getBodyDamage();
-bodyDamage:setOverallBodyHealth(100)
-player:getStats():setHunger(0)
-player:getStats():setFatigue(0)
-player:getStats():setBoredom(0)
-player:getStats():setEndurance(100)
-player:getStats():setSickness(0)
-player:getStats():setThirst(0)
-player:getStats():setFear(0)
-player:getStats():setStress(0)
-player:getStats():setDrunkenness(0)
-player:getStats():setPanic(0)
-player:getStats():setAnger(0)
-player:getStats():setStressFromCigarettes(0)
-bodyDamage:setFoodSicknessLevel(0)
-bodyDamage:setPoisonLevel(0)
-bodyDamage:setUnhappynessLevel(0)
-bodyDamage:setBoredomLevel(0)
-bodyDamage:setWetness(0)
-bodyDamage:setInfectionLevel(0);
-bodyDamage:getNutrition():setCalories(700)
-bodyDamage:decreaseBodyWetness(bodyDamage:getWetness())
-bodyDamage:setHasACold(false);
-bodyDamage:setInfected(false);
-bodyDamage:setFakeInfectionLevel(0);
-player:Say(tostring(getPlayer():getBodyDamage():getOverallBodyHealth())) ]]
+print('nothing')
 --**************************            	   **************************
 --end----------------------            ---------------------------end
     elseif button.internal == opTitle16 then --print(opTitle16); getPlayer():Say(opTitle16) 
 --start----------------------            ---------------------------start
---[[ getPlayer():setBumpType("stagger");
-getPlayer():setVariable("BumpDone", true)
-getPlayer():setVariable("BumpFall", false);
-getPlayer():setVariable("BumpFallType", "pushedBehind");
-getPlayer():reportEvent("wasBumped"); ]]
+
 glytchinjury();
 getPlayer():getModData()['undeadheal'] = true
 getPlayer():getBodyDamage():setOverallBodyHealth(100)
- timer:Simple(10, function()  getPlayer():getModData()['undeadheal'] = false end) 
+timer:Simple(4, function()  getPlayer():getModData()['undeadheal'] = false end) 
 
 --**************************        
-
 
 end
 end
