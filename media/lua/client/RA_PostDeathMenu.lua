@@ -48,8 +48,59 @@ function ISPostDeathUI:createChildren()
 
 end
 
-
+-- Retrieve data from the old player after OnDeath and reapplies to a new one here
 function ISPostDeathUI:onRespawnAsZed()
     print("Respawning as zombie")
 
+	-- TODO use CoopCharacterCreation as a base, accept1 in particular
+
+
+    -- getWorld():setLuaPlayerDesc(MainScreen.instance.desc)
+	-- getWorld():getLuaTraits():clear()
+
+	-- -- TODO Get correct traits from older player... or do we actually need them?
+
+
+	-- getWorld():
+
+
+	-- for i,v in pairs(self.charCreationProfession.listboxTraitSelected.items) do
+	-- 	getWorld():addLuaTrait(v.item:getType())
+	-- end
+	MainScreen.instance.avatar = nil
+
+
+	local forename = "Test"--getOldPlayerName()
+	local surname =  "Test" --getOldPlayerSurname()
+
+
+	-- MainScreen.instance.desc:setForename(forename)
+	-- MainScreen.instance.desc:setSurname(surname)
+
+	if ISPostDeathUI.instance[self.playerIndex] then
+		ISPostDeathUI.instance[self.playerIndex]:removeFromUIManager()
+		ISPostDeathUI.instance[self.playerIndex] = nil
+	end
+
+	if not self.joypadData then
+		setPlayerMouse(nil)
+		return
+	end
+
+	local controller = self.joypadData.controller
+	local joypadData = JoypadState.joypads[self.playerIndex+1]
+	JoypadState.players[self.playerIndex+1] = joypadData
+	joypadData.player = self.playerIndex
+	joypadData:setController(controller)
+	joypadData:setActive(true)
+	local username = nil
+	if isClient() and self.playerIndex > 0 then
+		username = CoopUserName.instance:getUserName()
+	end
+	setPlayerJoypad(self.playerIndex, self.joypadIndex, nil, username)
+
+	self.joypadData.focus = nil
+	self.joypadData.lastfocus = nil
+	self.joypadData.prevfocus = nil
+	self.joypadData.prevprevfocus = nil
 end
