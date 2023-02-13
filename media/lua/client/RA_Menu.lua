@@ -20,6 +20,7 @@ Discord: Glytch3r#2892
 
 ----------------------------------------------------------------------------------------------------------------------------
 --]]
+
 --if not (getCore():getDebug() or isAdmin()) then return; end
 
 
@@ -38,13 +39,7 @@ function ReanimationMenu.openPanel(playerObj)
     ReanimationMenu.instance = window
 end
 
-------------------------               ---------------------------
-
---**************************            	   **************************
---							     header**
---**************************            	   **************************
-
-
+-- TODO Rework these names
 local opTitle1 = "SetUndead"
 local opTitle2 = "Scream!"
 local opTitle3 = "recovery"
@@ -53,95 +48,99 @@ local opTitle5 = "zedblaze"
 local opTitle6 = "zeddeath"
 local opTitle7 = "injury"
 
---**************************            	   **************************
---								 body***
---**************************            	   **************************
+------------------------------------------------------------------
+-- OnClick Functions
+
+
+-- Set a certain player as a playable zed
+local function SetUndead()
+
+    if not getPlayer() then return end
+
+    local player = getPlayer()
+    local inventory = player:getInventory()
+
+    player:clearWornItems()
+    inventory:clear()
+    player:resetModel()
+
+    local bone_clothing = "Skin.Bones"
+    local equipped_bone_clothing = inventory:AddItem(bone_clothing)
+    equipped_bone_clothing:getVisual():setTextureChoice(3)
+    player:setWornItem(equipped_bone_clothing:getBodyLocation(), equipped_bone_clothing)
+
+    -- TODO what's this?
+    if player:getModData()['glytchprint'] then
+        player:getModData()['glytchprint'] = nil
+    else
+        player:getModData()['glytchprint'] = true;
+    end
+
+end
+
+-- Generate a zed scream
+local function StartScream()
+    local player = getPlayer()
+    glytchrage()
+
+    -- TODO this is just for debug I guess, delete it maybe
+    player:getBodyDamage():RestoreToFullHealth()
+    player:getZombieKills()
+
+end
+
+-- Toggle on or off the healing on a player zed
+local function ToogleZombiePlayerHealing()
+
+    if getPlayer():getModData()['undeadheal'] then
+        getPlayer():getModData()['undeadheal'] = false
+        Events.OnPlayerUpdate.Remove(undeadRecovery)
+    else
+        getPlayer():getModData()['undeadheal'] = true;
+        Events.OnPlayerUpdate.Add(undeadRecovery)
+    end
+
+
+end
+
+------------------------------------------------------------------
+
+
+
 function ReanimationMenu:onClick(button)
-    if button.internal == opTitle1 then
-        print(opTitle1);
-        --start----------------------               ---------------------------start
-
-        if not getPlayer() then return end
-        local pl = getPlayer()
-        local inv = pl:getInventory()
-        pl:clearWornItems();
-        inv:clear();
-        pl:resetModel();
-        local item = "Skin.Bones"
-        local equip = inv:AddItem(item);
-        equip:getVisual():setTextureChoice(3);
-        pl:setWornItem(equip:getBodyLocation(), equip);
-        if pl:getModData()['glytchprint'] then
-            pl:getModData()['glytchprint'] = nil
-        else
-            pl:getModData()['glytchprint'] = true;
-        end
-
-        --getPlayer():setVariable('isUndead', 'true')	
-        --end----------------------               ---------------------------end
-    elseif button.internal == opTitle2 then
-        print(opTitle2);
-        --start----------------------            ---------------------------start
-        local player = getPlayer()
-        glytchrage()
-        player:getBodyDamage():RestoreToFullHealth()
-        player:getZombieKills()
-        --Events.OnTick.Add()
-
-
-        --end----------------------            ---------------------------end
-    elseif button.internal == opTitle3 then
-        print(opTitle3);
-        --start----------------------           ---------------------------start
-
-        if getPlayer():getModData()['undeadheal'] then
-            getPlayer():getModData()['undeadheal'] = false
-            Events.OnPlayerUpdate.Remove(undeadRecovery)
-        else
-            getPlayer():getModData()['undeadheal'] = true;
-            Events.OnPlayerUpdate.Add(undeadRecovery)
-        end
-
-
-        --end----------------------            ---------------------------end
+    -- TODO Finish cleaning this up
+    if button.internal == "SetUndead" then
+        SetUndead()
+    elseif button.internal == "StartScream" then
+        StartScream()
+    elseif button.internal == "ToogleZombiePlayerHealing" then
+        ToogleZombiePlayerHealing()      -- TODO this is a toggle, not really clear in a menu like this
     elseif button.internal == opTitle4 then
-        print(opTitle4);
-        --start----------------------         ---------------------------start
+        print(opTitle4)
         if getPlayer():getModData()['glytchviral'] then
             getPlayer():getModData()['glytchviral'] = nil
         else
-            getPlayer():getModData()['glytchviral'] = true;
+            getPlayer():getModData()['glytchviral'] = true
         end
-        --end----------------------            -----------local ----------------end
     elseif button.internal == opTitle5 then
-        print(opTitle5);
-        --start----------------------         ---------------------------start
+        print(opTitle5)
         if getPlayer():getModData()['zedblaze'] then
             getPlayer():getModData()['zedblaze'] = nil
         else
-            getPlayer():getModData()['zedblaze'] = true;
+            getPlayer():getModData()['zedblaze'] = true
         end
-        --end----------------------            ---------------------------end
     elseif button.internal == opTitle6 then
         print(opTitle6);
-        --start----------------------         ---------------------------start
         if getPlayer():getModData()['zeddeath'] then
             getPlayer():getModData()['zeddeath'] = nil
         else
-            getPlayer():getModData()['zeddeath'] = true;
+            getPlayer():getModData()['zeddeath'] = true
         end
-        --end----------------------            ---------------------------end
     elseif button.internal == opTitle7 then
-        print(opTitle7);
-        --start----------------------         ---------------------------start
+        print(opTitle7)
         glytchinjury()
-        --[[     if getPlayer():getModData()['zedstag'] then
-        getPlayer():getModData()['zedstag'] = nil
-        else
-        getPlayer():getModData()['zedstag'] = true;
-    end ]]
-        --end----------------------            ---------------------------end
     end
+
 end
 
 function ReanimationMenu:createChildren()
@@ -203,7 +202,6 @@ function ReanimationMenu:createChildren()
     self:addChild(self.opt7);
 end
 
---**************************            	   **************************
 function ReanimationMenu:close()
     ReanimationMenu.instance = nil
     self:setVisible(false);

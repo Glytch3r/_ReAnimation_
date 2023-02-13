@@ -55,6 +55,7 @@ function ISPostDeathUI:onRespawnAsZed()
 	-- TODO Reapply correct appearances
 	-- TODO Reapply inventory
 	-- TODO Reapply traits
+	-- TODO Delete player zombie NPC
 
 	local player = getPlayer()
 	local player_cell = player:getCell()

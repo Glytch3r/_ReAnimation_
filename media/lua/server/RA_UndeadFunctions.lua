@@ -123,7 +123,7 @@ Events.OnGameStart.Add(OnGameStart)
 ----------------------------------------
 
 -- Used to prevent various injuries to a player-zed
-local function ManagedZedInjuries()
+local function ManageZedInjuries()
 	local player = getPlayer()
 	local body_damage = player:getBodyDamage()
 	local body_parts = body_damage:getBodyParts()
@@ -156,6 +156,21 @@ local function ManagedZedInjuries()
 	end
 end
 
+local function StartZedScream()
+	local pl = getPlayer()
+	getSoundManager():PlayWorldSound('SOSv1', pl:getSquare(), 0, 5, 5, false)
+	addSound(pl, pl:getX(), pl:getY(), pl:getZ(), 50, 1)
+
+	-- TODO what is this?
+	pl:getModData()['zeddeath'] = true
+	timer:Simple(5, function()
+		pl:getModData()['zeddeath'] = false
+		print("boom");
+		-- glytchinjury()
+		-- glytchinjury()
+	end)
+
+end
 
 
 
@@ -198,6 +213,9 @@ end
 Events.OnPlayerUpdate.Remove(undeadRecovery)
 Events.OnTick.Remove(undeadRecovery)
 local tickTock = 0
+
+
+-- What does this do?
 function undeadRecovery(pl)
 	if tickTock == 149 then
 		tickTock = 0
@@ -241,6 +259,7 @@ function undeadRecovery(pl)
 	end
 end
 
+-- TODO Change it to a better name
 function glytchrage()
 	local pl = getPlayer()
 	getSoundManager():PlayWorldSound('SOSv1', pl:getSquare(), 0, 5, 5, false);

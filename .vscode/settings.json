@@ -59,6 +59,8 @@
         "JoypadState",
         "setPlayerJoypad",
         "CoopUserName",
-        "setPlayerMouse"
+        "setPlayerMouse",
+        "getSoundManager",
+        "addSound"
     ]
 }
