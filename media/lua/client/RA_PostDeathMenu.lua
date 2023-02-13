@@ -52,21 +52,9 @@ end
 function ISPostDeathUI:onRespawnAsZed()
     print("Respawning as zombie")
 
-	-- TODO use CoopCharacterCreation as a base, accept1 in particular
-
-
-    -- getWorld():setLuaPlayerDesc(MainScreen.instance.desc)
-	-- getWorld():getLuaTraits():clear()
-
-	-- -- TODO Get correct traits from older player... or do we actually need them?
-
-
-	-- getWorld():
-
-
-	-- for i,v in pairs(self.charCreationProfession.listboxTraitSelected.items) do
-	-- 	getWorld():addLuaTrait(v.item:getType())
-	-- end
+	-- TODO Reapply correct appearances
+	-- TODO Reapply inventory
+	-- TODO Reapply traits
 
 	local player = getPlayer()
 	local player_cell = player:getCell()
