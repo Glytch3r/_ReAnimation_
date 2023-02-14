@@ -1,3 +1,10 @@
+-- Reanimation --
+
+-- After death, if the player is infected they will have the choice to continue as a zombie. If they choose yes, then
+-- they'll get respawned at the same location, same inventory and everything, and they'll be able to continue playing
+-- from there
+
+
 
 require "ISUI/ISPostDeathUI"
 

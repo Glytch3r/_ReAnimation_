@@ -39,7 +39,7 @@ function ReanimationMenu.openPanel(playerObj)
     ReanimationMenu.instance = window
 end
 
--- TODO Rework these names
+-- TODO Rework these names to make them consistent
 local opTitle1 = "SetUndead"
 local opTitle2 = "Scream!"
 local opTitle3 = "recovery"
