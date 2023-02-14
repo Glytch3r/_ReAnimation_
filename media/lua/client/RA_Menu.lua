@@ -81,7 +81,6 @@ end
 -- Generate a zed scream
 local function StartScream()
     local player = getPlayer()
-    glytchrage()
 
     -- TODO this is just for debug I guess, delete it maybe
     player:getBodyDamage():RestoreToFullHealth()
@@ -123,12 +122,13 @@ function ReanimationMenu:onClick(button)
             getPlayer():getModData()['glytchviral'] = true
         end
     elseif button.internal == opTitle5 then
-        print(opTitle5)
+     print(opTitle5..' zedblaze removed')
+--[[        
         if getPlayer():getModData()['zedblaze'] then
             getPlayer():getModData()['zedblaze'] = nil
         else
             getPlayer():getModData()['zedblaze'] = true
-        end
+        end ]]
     elseif button.internal == opTitle6 then
         print(opTitle6);
         if getPlayer():getModData()['zeddeath'] then
