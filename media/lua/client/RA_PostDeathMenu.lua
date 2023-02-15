@@ -60,17 +60,12 @@ RA_respawned_player = nil
 -- Retrieve data from the old player after OnDeath and reapplies to a new one here
 function ISPostDeathUI:onRespawnAsZed()
     print("Respawning as zombie")
-
-    -- TODO Reapply correct appearances
     -- TODO Reapply inventory
     -- TODO Reapply traits
     -- TODO Delete player zombie NPC
 
     local old_player = getPlayer()
     local old_player_cell = old_player:getCell()
-    --TempTable_RespawnedPlayerVisuals_2.forename = old_player:getForname()
-    --TempTable_RespawnedPlayerVisuals_2.surname = old_player:getSurname()
-
 
     -- Respawn in the same position
     getWorld():setLuaSpawnCellX(old_player_cell:getWorldX())
@@ -79,9 +74,7 @@ function ISPostDeathUI:onRespawnAsZed()
     getWorld():setLuaPosY(old_player:getY())
     getWorld():setLuaPosZ(old_player:getZ())
 
-
     -- We need to generate a new CreateSurvivor whenever the game starts, and then reapply it
-    -- SurvivorFactory.CreateSurvivor()
     local new_player = SurvivorFactory.CreateSurvivor()
     local is_female = old_player:isFemale()
 
@@ -91,7 +84,7 @@ function ISPostDeathUI:onRespawnAsZed()
     new_player_visual:clear()
     new_player_visual:copyFrom(old_player:getHumanVisual())
 
-    -- TODO Set zombie skin texture for the correct skin
+    -- Set zombie skin texture for the correct skin
     local old_skin = old_player:getHumanVisual():getSkinTexture()
     local new_skin_id = tonumber(string.match(old_skin, "0(%d)"))
 
@@ -111,48 +104,30 @@ function ISPostDeathUI:onRespawnAsZed()
     new_player_visual:setSkinTextureName(new_skin)
 
     -- TODO Set a fake name to the user so that we can track him down when he reanimates
-
     new_player:setForename("Test")     -- TODO This is wrong, it returns only Bob Smith
     new_player:setSurname("Test 2")
 
     RA_respawned_player = old_player
 
-    -- Cycle on old worn items for the old player
-    --for index,item in ipairs(worn_items) do
-    --    print("RA: " .. item)
-    --    new_player:setWornItem(item:getBodyLocation(), item)
-    --
-    --end
-
     getWorld():setLuaPlayerDesc(new_player)        --Survivor_Desc is just fancy human visual
     getWorld():getLuaTraits():clear()
     MainScreen.instance.avatar = nil
-
-    --MainScreen.instance.avatar = nil
-    --MainScreen.instance.desc = old_player
-    -- MainScreen.instance.desc:setForename(forename)
-    -- MainScreen.instance.desc:setSurname(surname)
-
     if ISPostDeathUI.instance[self.playerIndex] then
         ISPostDeathUI.instance[self.playerIndex]:removeFromUIManager()
         ISPostDeathUI.instance[self.playerIndex] = nil
     end
-
-
-
-
-
     if not self.joypadData then
         setPlayerMouse(nil)
         return
     end
-
     local controller = self.joypadData.controller
     local joypadData = JoypadState.joypads[self.playerIndex + 1]
     JoypadState.players[self.playerIndex + 1] = joypadData
     joypadData.player = self.playerIndex
     joypadData:setController(controller)
     joypadData:setActive(true)
+
+
     local username = nil
     if isClient() and self.playerIndex > 0 then
         username = CoopUserName.instance:getUserName()
@@ -193,13 +168,10 @@ local function OnCreateZedPlayer(player_index, player)
     local player_inv = player:getInventory()
 
     for _, v in pairs(old_player_items) do
-        print("RA: Reading item .. ")
-
-        -- TODO Ignore belt
-        player_inv:AddItem(v:getFullType())
-        player:setWornItem(v:getBodyLocation(), v)
-
-
+        if string.find(v:getFullType(), "Belt") ~= true then
+            local new_item = player_inv:AddItem(v)
+            player:setWornItem(new_item:getBodyLocation(), new_item)
+        end
     end
 
 
@@ -208,22 +180,18 @@ local function OnCreateZedPlayer(player_index, player)
     for i=zombies:size(),1,-1 do
         local zombie = zombies:get(i-1)
         if instanceof(zombie, "IsoZombie") then
-            print("RA: Listing zombie " .. tostring(i))
+            --print("RA: Listing zombie " .. tostring(i))
             local name = zombie:getFullName()
 
+            -- TODO Use the username as a check
             if name == "None None" then
                 print("RA: Found reanimated player")
                 zombie:resetForReuse()
-                zombie:removeFromWorld()    -- TODO it doesn't really delete it, it remains somehow
+                zombie:removeFromWorld()
                 zombie:removeFromSquare()
             end
 
-            -- TODO Add a stronger check, if there is another reanimated player in there he's gonna get deleted
-            --if reanimated_player ~= nil then
-            --    print("RA: Found reanimated player")
-            --    zombie:removeFromWorld()
-            --    zombie:removeFromSquare()
-            --end
+
 
 
 
