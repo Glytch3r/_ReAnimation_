@@ -237,7 +237,7 @@ function ReanimationMenu.press(key)
 
 
         getPlayer():playEmote("isZedScream")
-        glytchrage()
+        --glytchrage()
         return key
     end
 end
