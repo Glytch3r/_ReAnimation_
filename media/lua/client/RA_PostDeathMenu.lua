@@ -4,8 +4,6 @@
 -- they'll get respawned at the same location, same inventory and everything, and they'll be able to continue playing
 -- from there
 
-
-
 require "ISUI/ISPostDeathUI"
 
 local og_ISPostDeathUICreateChildren = ISPostDeathUI.createChildren
@@ -52,9 +50,8 @@ function ISPostDeathUI:createChildren()
 end
 
 
-
-
-RA_respawned_player = nil
+RA_is_respawning_as_zed = false
+RA_player_items = {}
 
 -- Retrieve data from the old player after OnDeath and reapplies to a new one here
 function ISPostDeathUI:onRespawnAsZed()
@@ -106,7 +103,7 @@ function ISPostDeathUI:onRespawnAsZed()
     new_player:setForename("Test")     -- TODO This is wrong, it returns only Bob Smith
     new_player:setSurname("Test 2")
 
-    RA_respawned_player = old_player
+    RA_is_respawning_as_zed = true
 
     getWorld():setLuaPlayerDesc(new_player)        --Survivor_Desc is just fancy human visual
     getWorld():getLuaTraits():clear()
@@ -140,81 +137,8 @@ function ISPostDeathUI:onRespawnAsZed()
 
 end
 
--- Love you fenriswolf
-local function findField(object, field)
-    local count = getNumClassFields(object)
-    local i = 0
-    while i < count do
-        local f = getClassField(object, i)
-        if tostring(f) == field then return f end
-        i = i+1
-    end
-end
 
-local function OnCreateZedPlayer(player_index, player)
-    -- Reapplies the visuals
-
-    local test_i = findField(player, "ReanimatedCorpse")
-
-    local reanimated_player_field = getClassFieldVal(player, test_i)
-    reanimated_player_field = nil
-
-    print("RA: Test_i test test test : " .. tostring(i))
-
-    -- TODO 74
-
-    local mod_data = player:getModData().RA
-    if mod_data then
-        if mod_data.is_zed then
-            player:setZombiesDontAttack(true)
-        end
-    end
-
-    if RA_respawned_player == nil then return end
-
-    local old_player_id = RA_respawned_player:getOnlineID()
-    local old_player_items = RA_player_items
-
-    player:setZombiesDontAttack(true)
-    player:getModData().RA = {
-        is_zed = true
-    }
-
-
-    local player_inv = player:getInventory()
-
-    for _, v in pairs(old_player_items) do
-        if string.find(v:getFullType(), "Belt") ~= true then
-            local new_item = player_inv:AddItem(v)
-            player:setWornItem(new_item:getBodyLocation(), new_item)
-        end
-    end
-
-
-    -- TODO Search in nearby squares, check getReanimatedPlayer()
-    local zombies = getCell():getObjectList()
-    for i=zombies:size(),1,-1 do
-        local zombie = zombies:get(i-1)
-        if instanceof(zombie, "IsoZombie") then
-            --print("RA: Listing zombie " .. tostring(i))
-            local name = zombie:getFullName()
-            -- TODO This doesn't work in MP
-            -- TODO Use the username as a check
-            if name == "None None" then
-                print("RA: Found reanimated player")
-                zombie:resetForReuse()
-                zombie:removeFromWorld()
-                zombie:removeFromSquare()
-            end
-        end
-    end
-
-    RA_respawned_player = nil
-
-end
-
-
-RA_player_items = {}
+-- Fill RA_player_items
 local function OnDeathSaveWornItems(player)
 
     local worn_items = player:getWornItems()
@@ -227,6 +151,4 @@ local function OnDeathSaveWornItems(player)
         table.insert(RA_player_items, item)
     end
 end
-
-Events.OnCreatePlayer.Add(OnCreateZedPlayer)
 Events.OnPlayerDeath.Add(OnDeathSaveWornItems)
