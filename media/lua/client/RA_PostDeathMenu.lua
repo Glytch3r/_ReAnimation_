@@ -56,7 +56,6 @@ end
 
 RA_respawned_player = nil
 
-
 -- Retrieve data from the old player after OnDeath and reapplies to a new one here
 function ISPostDeathUI:onRespawnAsZed()
     print("Respawning as zombie")
@@ -141,16 +140,33 @@ function ISPostDeathUI:onRespawnAsZed()
 
 end
 
-
+-- Love you fenriswolf
+local function findField(object, field)
+    local count = getNumClassFields(object)
+    local i = 0
+    while i < count do
+        local f = getClassField(object, i)
+        if tostring(f) == field then return f end
+        i = i+1
+    end
+end
 
 local function OnCreateZedPlayer(player_index, player)
     -- Reapplies the visuals
 
+    local test_i = findField(player, "ReanimatedCorpse")
+
+    local reanimated_player_field = getClassFieldVal(player, test_i)
+    reanimated_player_field = nil
+
+    print("RA: Test_i test test test : " .. tostring(i))
+
+    -- TODO 74
+
     local mod_data = player:getModData().RA
     if mod_data then
         if mod_data.is_zed then
-            player:setInvisible(true)
-
+            player:setZombiesDontAttack(true)
         end
     end
 
@@ -159,7 +175,7 @@ local function OnCreateZedPlayer(player_index, player)
     local old_player_id = RA_respawned_player:getOnlineID()
     local old_player_items = RA_player_items
 
-    player:setInvisible(true)
+    player:setZombiesDontAttack(true)
     player:getModData().RA = {
         is_zed = true
     }
@@ -182,7 +198,7 @@ local function OnCreateZedPlayer(player_index, player)
         if instanceof(zombie, "IsoZombie") then
             --print("RA: Listing zombie " .. tostring(i))
             local name = zombie:getFullName()
-
+            -- TODO This doesn't work in MP
             -- TODO Use the username as a check
             if name == "None None" then
                 print("RA: Found reanimated player")
@@ -190,24 +206,14 @@ local function OnCreateZedPlayer(player_index, player)
                 zombie:removeFromWorld()
                 zombie:removeFromSquare()
             end
-
-
-
-
-
         end
     end
 
-
-
-    -- TODO we need to teleport the old player zombie away or something like that
-
-
-
     RA_respawned_player = nil
 
-
 end
+
+
 RA_player_items = {}
 local function OnDeathSaveWornItems(player)
 
@@ -219,7 +225,6 @@ local function OnDeathSaveWornItems(player)
         local item = worn_items:getItemByIndex(i)
         print("RA: Saving " ..tostring(i))
         table.insert(RA_player_items, item)
-        --print("RA: item => " .. item)
     end
 end
 
