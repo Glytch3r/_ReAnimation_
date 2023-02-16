@@ -1,4 +1,3 @@
-
 function RA_StartPlayerZedUpdate()
 
     local player = getPlayer()
@@ -54,14 +53,26 @@ function RA_StartPlayerZedUpdate()
 
 
     end
-
-
     Events.OnTick.Add(ManageZedPlayer)
 
+    local function DisableInteractAction()
+
+        for i,v in ipairs(MainOptions.keyText) do
+            if not v.value and (v.txt:getName() == "Interact") then
+                v.keyCode = 0
+                getCore():addKeyBinding(v.txt:getName(), nil)
+                break
+            end
+        end
+    end
+    Events.OnTick.Add(DisableInteractAction)
+
+    local function OnInteractAction(key)
+        if key == 18 then
+            print("RA: Pressed E, should check for windows")
+        end
+    end
+    Events.OnKeyPressed.Add(OnInteractAction)
+
+
 end
-
-
-
-
-
-

@@ -7,6 +7,17 @@
 -- TODO 3) Screamer logic
 -- TODO 4) ... 
 
+local function DisableKeybinds()
+
+    -- Disables map
+    Events.OnKeyStartPressed.Remove(ISWorldMap.onKeyStartPressed)
+    Events.OnKeyKeepPressed.Remove(ISWorldMap.onKeyKeepPressed)
+    Events.OnKeyPressed.Remove(ISWorldMap.onKeyReleased)
+
+
+    OverrideZedPlayerActions()
+
+end
 
 
 -- Manages normal login
@@ -19,7 +30,13 @@ local function OnCreatePlayerLogin(player_index, player)
         player:setZombiesDontAttack(true)
         player:setVariable("isAct1", "true")            -- TODO Send it to network and change its name to something else
         player:setInvisible(true)
+        player:setCanShout(false)
+        ISWorldMap.isAllowed = false
+
+        DisableKeybinds()
+
         RA_StartPlayerZedUpdate()
+
     end
 
 end
