@@ -1,0 +1,108 @@
+_ReAnimation_
+Players will become zed once they die after being infected
+does not turn when infection is off for the server(except for admins)
+Admins can become zed instantly via zed menu (pressing end)
+
+
+when a player die he should not be a part of a faction during his time as a zed but will regain the faction when he respawns as human
+
+before human players hp is depleated they will become godmode(so that aim from players are disabled) and will remain psudo dead untill its time to turn to a zed based on serversettings
+
+-players weapon might get stuck upon stabbing a zed (example katana on stomach)
+
+when you are a zed player:
+
+-player zeds should have access to a skip button which directly spawns them as human and skip being a zed since zeds dont have the ability to commit suicide
+
+-zed players bite and claw causes laceration or bleeding and possibly applies infection to target
+
+-zed players experience and leveling should be disabled
+
+-the game naturaly makes zed follow players, this mod should be able to remove
+zeds treat zedplayer as a zed too
+
+-drag down is a time action when a player is being dragged down by multiple zeds
+a zed player should be able to participate on this along with other zed or alone if a critical hit is applied just like how knife backstabs zed
+
+-zed players  shove is converted to attacks lunge, claw or bite
+
+-zed players  can destroy containers just by hitting them
+
+-zed players can destroy vehicles
+
+-zed players  should add as 1 zed to the number of zed near the player (for the panic rate)
+
+-zed players should cause jumpscare when a player sees them
+
+moodles / stats:
+-zed player is constantly hungry
+eating corpses on the ground satiates this
+
+-zed player has no thirst stress endurance panic happiness boredom and fatigue nor feel pain
+
+-zeds dont sleep / cannot sleep
+
+-zed players should not get drunk or poisoned
+
+-carry weight is disabled, any equipped weapon should be dropped on the ground
+
+-if the human player dies with a flashlight or radio turned on, it should still be on until battery dies
+
+-injuries doesnt reduce zeds health gradually
+
+-zeds entire hp system should be changed and based on servers settings for zeds toughness
+
+-zed players dont get sick
+
+-zed players will not get damaged upon falling from high places
+
+-fake dead, "sit on ground" is replaced with "fake dead"
+during fake death mode the zed player shouldnt be targetable
+
+
+disabled features:
+
+-when you die as a zed you should not scream like a human, so audio cues should be overidden
+
+-as a zed  player you cannot access the map
+
+-zed player cannot loot the inventory is completly inaccessible (hidden)
+
+-zed players cannot view loot containers
+
+-zed players cannot access mechanics panel nor sit inside vehicles
+
+-zed players cannot open windows
+
+-zeds shoulder bump or claws the door upon interaction
+
+-zed players should destroy windows same as how zeds do it
+
+-zed players can only open doors if "zed can open doors" settings is turned on
+
+-zeds names/admin tags should not be visible to other players
+
+-zeds cannot build and cannot interact with objects such as sheet rope, oven, stove, campfire,
+
+
+player zed types:
+
+-zed player's sneak is crawl so  all player zeds are crawler aswell
+
+-during crawl zed players should be able to go under vehicles
+
+-when spawning as zed your previous players speed determines your time
+wether you are a shambler or fast shambler
+
+-sprint as sprinter is only unlocked if the player human has full speed
+
+-spitter, spitter is a special type of zed that can be unlocked if the human player counter part has max aiming, spitter hurls a spit that instantly poisons target
+-spit ability should have cooldowns
+
+-exploding zed, explodes upon contact with human, this is unlocked if a player is carrying an explosive device with them before they die (random chance based / may not activate)
+
+-your shout becomes scream
+scream produces long range audio and possibly buffs damage and speed of nearby zed that heard the scream
+-screams should have cooldown
+
+

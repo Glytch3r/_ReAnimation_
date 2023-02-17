@@ -39,7 +39,7 @@ function ReanimationMenu.openPanel(playerObj)
     ReanimationMenu.instance = window
 end
 
--- TODO Rework these names
+-- TODO Rework these names to make them consistent
 local opTitle1 = "SetUndead"
 local opTitle2 = "Scream!"
 local opTitle3 = "recovery"
@@ -55,7 +55,9 @@ local opTitle7 = "injury"
 -- Set a certain player as a playable zed
 local function SetUndead()
 
-    if not getPlayer() then return end
+    if not getPlayer() then
+        return
+    end
 
     local player = getPlayer()
     local inventory = player:getInventory()
@@ -122,13 +124,13 @@ function ReanimationMenu:onClick(button)
             getPlayer():getModData()['glytchviral'] = true
         end
     elseif button.internal == opTitle5 then
-     print(opTitle5..' zedblaze removed')
---[[        
-        if getPlayer():getModData()['zedblaze'] then
-            getPlayer():getModData()['zedblaze'] = nil
-        else
-            getPlayer():getModData()['zedblaze'] = true
-        end ]]
+        print(opTitle5 .. ' zedblaze removed')
+        --[[
+                if getPlayer():getModData()['zedblaze'] then
+                    getPlayer():getModData()['zedblaze'] = nil
+                else
+                    getPlayer():getModData()['zedblaze'] = true
+                end ]]
     elseif button.internal == opTitle6 then
         print(opTitle6);
         if getPlayer():getModData()['zeddeath'] then
@@ -149,8 +151,6 @@ function ReanimationMenu:createChildren()
     local th = self:titleBarHeight()
     local buttonWid = 90 - 12
     local buttonHgt = 24
-
-
 
     self.opt1 = ISButton:new(self:getWidth() / 2 - buttonWid / 2, th + 10, buttonWid, buttonHgt, opTitle1, self,
             ReanimationMenu.onClick);
@@ -219,12 +219,16 @@ end
 
 function ReanimationMenu.press(key)
     if (key == 207) then
-        if not (getCore():getDebug() or isAdmin()) then return; end
+        if not (getCore():getDebug() or isAdmin()) then
+            return ;
+        end
         ReanimationMenu.openPanel()
         return key
     end
     if (key == getCore():getKey("Emote") or key == getCore():getKey("Shout")) then
-        if not (getCore():getDebug() or isAdmin()) then return; end
+        if not (getCore():getDebug() or isAdmin()) then
+            return ;
+        end
         if getPlayer():getModData()['glytchprint'] then
         end
 
@@ -233,7 +237,7 @@ function ReanimationMenu.press(key)
 
 
         getPlayer():playEmote("isZedScream")
-        glytchrage()
+        --glytchrage()
         return key
     end
 end
