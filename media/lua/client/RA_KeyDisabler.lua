@@ -1,4 +1,5 @@
 
+-- from Pao: we're alreading doing this in RA_InitPlayer
 function unBanZedKeys()
 	getCore():reinitKeyMaps()
 end
@@ -37,8 +38,8 @@ function banZedKeys()
 	"Hotbar 3",
 	"Hotbar 4",
 	"Hotbar 5",
-	"Toggle Lua Debugger"
-	"ToggleGodModeInvisible"
+	"Toggle Lua Debugger",
+	"ToggleGodModeInvisible",
 	"WalkTo",
 	"Toggle mode",
 	}

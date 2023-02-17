@@ -8,7 +8,10 @@
 -- TODO 4) ... 
 
 
+local AddZedFists = function()
+    Reanimation.zed_fists = InventoryItemFactory.CreateItem("Base.ZedFists")
 
+end
 
 
 local function DisableKeybinds()
@@ -38,7 +41,7 @@ local function OnCreatePlayerLogin(player_index, player)
 
         DisableKeybinds()
         RA_StartPlayerZedUpdate()
-
+        AddZedFists()
     end
 
 end

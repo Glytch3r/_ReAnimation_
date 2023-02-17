@@ -1,3 +1,6 @@
+-- Manages all the updating parts of the code
+
+
 function RA_StartPlayerZedUpdate()
 
     local player = getPlayer()
@@ -46,9 +49,8 @@ function RA_StartPlayerZedUpdate()
     local function ManageZedPlayer()
 
         -- Manages healing
-        --HealZedPlayer()
-        -- TODO Move this, OnTick is overkill
-        RA_StartNewAnimation(player, "isScrambler")
+        HealZedPlayer()
+
 
         -- Something else
         player:setInvisible(true)       -- To be sure that it doesn't "come off"
@@ -69,21 +71,43 @@ function RA_StartPlayerZedUpdate()
     end
     Events.OnTick.Add(DisableInteractAction)
 
-    local function OnInteractAction(key)
-        if key == 18 then
-            print("RA: Pressed E, should check for windows")
-        end
+
+
+    ----------------------
+    -- Animations
+    local function UpdateAnimationState(upd_player)
+        RA_StartNewAnimation(upd_player, "isScrambler")
     end
-    Events.OnKeyPressed.Add(OnInteractAction)
 
+    Events.OnPlayerUpdate.Add(UpdateAnimationState)
 
-
-
-    -- Hooks test
+    -----------------------
+    -- Health management
     local function ManageHealthZedPlayer(character)
         --print("Should stay forever stuck")
+        -- TODO Manage hunger
     end
-
-
     Hook.CalculateStats.Add(ManageHealthZedPlayer)
+
+
+
+    -----------------------
+    -- Zed Attacks management
+    --local ZedAttack = function(character, chargeDelta, primary)
+    --    print("Zed Attack")
+    --    primary = Reanimation.zed_fists
+    --
+    --    ISTimedActionQueue.add(RAZedAttack:new(character, primary, 1.0))
+    --end
+    --
+    --Hook.Attack.Remove(ISReloadWeaponAction.attackHook)
+    --Hook.Attack.Add(ZedAttack)
+    --
+    --local OnZedAttack = function(x, y)
+    --    print("RA: Managing Zed Attack")
+    --    local player = getSpecificPlayer(0)
+    --    ZedAttack(player, nil, nil)     -- TODO Based on Brutal Handwork, is this correct?
+    --end
+    --Events.OnMouseDown.Add(OnZedAttack)
+
 end

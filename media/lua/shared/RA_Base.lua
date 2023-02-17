@@ -7,3 +7,4 @@ Reanimation.animation_sets = {
     fast_scrambler = "isFastScrambler",
     runner = "isZedRunner"
 }
+
