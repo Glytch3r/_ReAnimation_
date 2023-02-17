@@ -4,14 +4,14 @@
 if isClient() then return; end
 
 local Commands = {}
-Commands.GlytchAnimations = {}
+Commands.RA = {}
 
 
 
 
 
-Commands.GlytchAnimations.NotifyAnimation = function(_, args)
-    sendServerCommand("GlytchAnimations", "AcceptNewAnimation", {args.sender, args.action})
+Commands.RA.NotifyAnimation = function(_, args)
+    sendServerCommand("RA", "AcceptNewAnimation", {args.sender, args.anim})
 end
 
 function Anim_OnInitGlobalModData()

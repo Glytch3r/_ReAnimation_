@@ -46,7 +46,9 @@ function RA_StartPlayerZedUpdate()
     local function ManageZedPlayer()
 
         -- Manages healing
-        HealZedPlayer()
+        --HealZedPlayer()
+        -- TODO Move this, OnTick is overkill
+        RA_StartNewAnimation(player, "isScrambler")
 
         -- Something else
         player:setInvisible(true)       -- To be sure that it doesn't "come off"
@@ -75,4 +77,13 @@ function RA_StartPlayerZedUpdate()
     Events.OnKeyPressed.Add(OnInteractAction)
 
 
+
+
+    -- Hooks test
+    local function ManageHealthZedPlayer(character)
+        --print("Should stay forever stuck")
+    end
+
+
+    Hook.CalculateStats.Add(ManageHealthZedPlayer)
 end

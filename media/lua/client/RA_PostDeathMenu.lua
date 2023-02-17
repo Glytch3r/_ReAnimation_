@@ -23,13 +23,21 @@ function ISPostDeathUI:createChildren()
     self:setX(self.screenX + (self.screenWidth - buttonWid) / 2)
     self:setY(self.screenY + (self.screenHeight - 40 - totalHgt))
 
-    local button = ISButton:new(buttonX, buttonY, buttonWid, buttonHgt, getText("IGUI_PostDeath_RespawnAsZed"), self, self.onRespawnAsZed)
-    self:configButton(button)
-    self:addChild(button)
-    self.buttonRespawn = button
-    buttonY = buttonY + buttonHgt + buttonGapY
+    local button
+    local dead_player = getPlayer()
+    local dead_player_body_damage = dead_player:getBodyDamage()
+    local ra_data = RA_GetRAData()
 
-    local button = ISButton:new(buttonX, buttonY, buttonWid, buttonHgt, getText("IGUI_PostDeath_Respawn"), self, self.onRespawn)
+    if dead_player_body_damage:isInfected() and not ra_data.is_zed  then
+        button = ISButton:new(buttonX, buttonY, buttonWid, buttonHgt, getText("IGUI_PostDeath_RespawnAsZed"), self, self.onRespawnAsZed)
+        self:configButton(button)
+        self:addChild(button)
+        self.buttonRespawn = button
+        buttonY = buttonY + buttonHgt + buttonGapY
+    end
+
+
+    button = ISButton:new(buttonX, buttonY, buttonWid, buttonHgt, getText("IGUI_PostDeath_Respawn"), self, self.onRespawn)
     self:configButton(button)
     self:addChild(button)
     self.buttonRespawn = button

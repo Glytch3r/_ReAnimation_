@@ -7,6 +7,10 @@
 -- TODO 3) Screamer logic
 -- TODO 4) ... 
 
+
+
+
+
 local function DisableKeybinds()
 
     -- Disables map
@@ -23,18 +27,16 @@ end
 -- Manages normal login
 local function OnCreatePlayerLogin(player_index, player)
 
-    local ra_data = GetRaModData()
+    local ra_data = RA_GetRAData()
 
     -- Reset all the zed related stuff
     if ra_data.is_zed then
         player:setZombiesDontAttack(true)
-        player:setVariable("isAct1", "true")            -- TODO Send it to network and change its name to something else
         player:setInvisible(true)
         player:setCanShout(false)
         ISWorldMap.isAllowed = false
 
         DisableKeybinds()
-
         RA_StartPlayerZedUpdate()
 
     end
@@ -80,7 +82,7 @@ local function OnCreateNewZedPlayer(player_index, player)
         RA_player_items = nil
 
         -- Set is_zed to true
-        local ra_data = GetRaModData()
+        local ra_data = RA_GetRAData()
         ra_data.is_zed = true
         OnCreatePlayerLogin(_, player)
     end
