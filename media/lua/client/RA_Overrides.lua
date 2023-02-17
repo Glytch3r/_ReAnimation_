@@ -1,6 +1,6 @@
 
 function OverrideZedPlayerActions()
-
+    require("TimedActions/ISOpenCloseDoor")
 
 
     function ISObjectClickHandler.doClickSpecificObject(object, playerNum, playerObj)
@@ -19,6 +19,7 @@ function OverrideZedPlayerActions()
     function ISOpenCloseDoor:isValid()
         return false
     end
+
 
     function ISBaseTimedAction:isValidStart() return false end
 
