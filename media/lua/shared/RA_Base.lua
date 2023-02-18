@@ -1,3 +1,5 @@
+-- TODO This is not how I should handle this kind of stuff
+
 if Reanimation == nil then
     Reanimation = {}
 end

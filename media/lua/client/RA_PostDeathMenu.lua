@@ -148,6 +148,8 @@ end
 
 -- Fill RA_player_items
 local function OnDeathSaveWornItems(player)
+    -- TODO Add a check, this shouldn't be run when the player is not infected
+
 
     local worn_items = player:getWornItems()
     print("RA: Saving following worn items")

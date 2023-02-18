@@ -1,52 +1,34 @@
--- REANIMATION --
-
-
-
--- TODO 1) Tag player as controllable zombie
--- TODO 2) Switch player right before death to zombie
--- TODO 3) Screamer logic
--- TODO 4) ... 
-
-
-local AddZedFists = function()
-    Reanimation.zed_fists = InventoryItemFactory.CreateItem("Base.ZedFists")
-
-end
-
-
-local function DisableKeybinds()
-
-    -- Disables map
-    Events.OnKeyStartPressed.Remove(ISWorldMap.onKeyStartPressed)
-    Events.OnKeyKeepPressed.Remove(ISWorldMap.onKeyKeepPressed)
-    Events.OnKeyPressed.Remove(ISWorldMap.onKeyReleased)
-
-
-    OverrideZedPlayerActions()
-
-end
+-------------------------------
+-------- REANIMATION ----------
+-------------------------------
+-- Initialization manager for a new zed player
 
 
 -- Manages normal login
 local function OnCreatePlayerLogin(player_index, player)
 
     local ra_data = RA_GetRAData()
-
-    -- Reset all the zed related stuff
     if ra_data.is_zed then
+
         player:setZombiesDontAttack(true)
         player:setInvisible(true)
         player:setCanShout(false)
-        ISWorldMap.isAllowed = false
 
-        DisableKeybinds()
+        -- Override to some actions such as opening the door via click. Interacting via E key is managed through other methods
+        RA_DisableMapActions()
+        RA_DisableVariousClickInteractions()
+        RA_DisableHotbarUsage()
+
+        Events.OnKeyPressed.Add(RA_DisableDoorAndWindowInteraction)
+
+
+        -- Starts a OnTick function to manage the zed
         RA_StartPlayerZedUpdate()
-        AddZedFists()
+        --AddZedFists()               -- TODO remove this
     end
 
 end
 Events.OnCreatePlayer.Add(OnCreatePlayerLogin)
-
 
 -- Manages creation of a new Zed Player (as in, just respawned as a zombie)
 local function OnCreateNewZedPlayer(player_index, player)
@@ -72,7 +54,7 @@ local function OnCreateNewZedPlayer(player_index, player)
                 local name = zombie:getFullName()
                 print(name)
                 if name == "None None" then
-                --    print("RA: Found reanimated player")
+                    --    print("RA: Found reanimated player")
                     zombie:resetForReuse()
                     zombie:removeFromWorld()
                     zombie:removeFromSquare()
@@ -87,8 +69,11 @@ local function OnCreateNewZedPlayer(player_index, player)
         -- Set is_zed to true
         local ra_data = RA_GetRAData()
         ra_data.is_zed = true
+
+        -- Startup the player with the remaining stuff
         OnCreatePlayerLogin(_, player)
     end
 
 end
 Events.OnCreatePlayer.Add(OnCreateNewZedPlayer)
+
