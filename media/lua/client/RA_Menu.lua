@@ -95,10 +95,10 @@ local function ToogleZombiePlayerHealing()
 
     if getPlayer():getModData()['undeadheal'] then
         getPlayer():getModData()['undeadheal'] = false
-        Events.OnPlayerUpdate.Remove(undeadRecovery)
+        Events.OnPlayerUpdate.Remove(UndeadRecovery)
     else
         getPlayer():getModData()['undeadheal'] = true;
-        Events.OnPlayerUpdate.Add(undeadRecovery)
+        Events.OnPlayerUpdate.Add(UndeadRecovery)
     end
 
 

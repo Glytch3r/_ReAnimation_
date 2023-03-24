@@ -203,7 +203,7 @@ local tickTock = 0
 
 
 -- What does this do?
-function undeadRecovery(pl)
+function UndeadRecovery(pl)
 	if tickTock == 149 then
 		tickTock = 0
 	else
@@ -243,7 +243,7 @@ function undeadRecovery(pl)
 		--pl:getBodyDamage():getHealth()
 	end
 end
-Events.OnPlayerUpdate.Remove(undeadRecovery)
+Events.OnPlayerUpdate.Remove(UndeadRecovery)
 
 
 
