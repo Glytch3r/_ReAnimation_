@@ -187,8 +187,17 @@ function RAZedAttack:start()
 
     local atype = "rpunch1"
     FindAndAttackTargets(self.character, self.weapon, true)
-
-
+    
+    
+    --TODO not sure but these code might help?
+	--[[  
+	self.character:setState("idle")
+	self.character:setDirection(IsoDirections.S)
+	self.character:setIsometric(false)
+	self.character:setDoRandomExtAnimations(true)
+	 ]]
+	 
+	 
     --self.character:setVariable("LCombatSpeed", self.speed)
     --self.character:setVariable("AttackAnim", true)
     --self:setActionAnim("LAttack")
@@ -208,6 +217,7 @@ function RAZedAttack:animEvent(event, parameter)
         --end
     elseif event == 'AttackCollisionCheck' then
         FindAndAttackTargets(self.character, self.weapon, true)
+        
         --if isClient() then
         --    sendClientCommand(self.character, "BrutalAttack", "Attack", {PID=self.character:getPlayerNum(), Offhand=true, extraRange=true})
         --end
