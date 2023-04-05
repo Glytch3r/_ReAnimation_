@@ -8,11 +8,19 @@ module Skin {
 		DisplayName = Bones,
 		ClothingItem = Bones_clo,
 		BodyLocation = Torso1Legs1, 
-		IconsForTexture = Bones_ico,		
+		Icon = Bones_ico,		
 		WorldStaticModel = WorldItems/Bones_ground,		
 	}		
-
-
+	item Scare
+	{
+       DisplayCategory = Clothing,		
+		Type = Clothing,
+		DisplayName = Scare,
+		ClothingItem = scare,
+		BodyLocation = Torso1Legs1, 
+		Icon = Bones_ico,		
+		
+	}		
 
 
 }

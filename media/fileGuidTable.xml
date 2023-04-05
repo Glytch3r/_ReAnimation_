@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <fileGuidTable>
-
-
-
-		<files>
+	<files>
 		<path>media/clothing/clothingItems/Bones_clo.xml</path>
 		<guid>0f44ec14-08ea-42e0-a99f-f1579b71fe92</guid>
 	</files>	
-
+	<files>
+		<path>media/clothing/clothingItems/scare.xml</path>
+		<guid>aab900f1-36ed-4eba-97f4-7860658d2a68</guid>
+	</files>
 </fileGuidTable>
+

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <clothingItem>
-	<m_MaleModel>media\models_X\Skinned\Bones.fbx</m_MaleModel>
-	<m_FemaleModel>media\models_X\Skinned\Bones.fbx</m_FemaleModel>
+	<m_MaleModel>media\models_X\Skinned\Male_Skeleton.X</m_MaleModel>
+	<m_FemaleModel>media\models_X\Skinned\Male_Skeleton.X</m_FemaleModel>
 	<m_GUID>0f44ec14-08ea-42e0-a99f-f1579b71fe92</m_GUID>
 	<m_Static>false</m_Static>
 	<m_AllowRandomHue>false</m_AllowRandomHue>
@@ -23,9 +23,39 @@
 	<m_Masks>13</m_Masks>
 	<m_Masks>14</m_Masks>
 	<m_Masks>15</m_Masks>
-	<textureChoices>Body\Skeleton</textureChoices>
-	<textureChoices>Body\SkeletonMuscle</textureChoices>
-	<textureChoices>Body\Skeleton_Mannequin</textureChoices>
-	<textureChoices>Body\SkeletonBurned</textureChoices>
-</clothingItem>
 
+
+<textureChoices>Body\blank_invi</textureChoices>
+
+<textureChoices>Body\bnw1</textureChoices>
+<textureChoices>Body\bnw2</textureChoices>
+<textureChoices>Body\bnw3</textureChoices>
+
+<textureChoices>Body\camo1</textureChoices> 
+<textureChoices>Body\camo2</textureChoices> 
+<textureChoices>Body\camo3</textureChoices>
+
+<textureChoices>Body\colorful1</textureChoices> 
+<textureChoices>Body\colorful2</textureChoices> 
+<textureChoices>Body\colorful3</textureChoices>
+
+<textureChoices>Body\etc1</textureChoices> 
+<textureChoices>Body\etc2</textureChoices> 
+<textureChoices>Body\etc3</textureChoices>
+<textureChoices>Body\etc4</textureChoices> 
+
+<textureChoices>Body\Skeleton1</textureChoices>
+<textureChoices>Body\Skeleton2</textureChoices>
+<textureChoices>Body\Skeleton3</textureChoices>
+
+<textureChoices>Body\SkeletonBurned1</textureChoices>
+<textureChoices>Body\SkeletonBurned2</textureChoices> 
+<textureChoices>Body\SkeletonBurned3</textureChoices>
+<textureChoices>Body\SkeletonBurned4</textureChoices>
+
+<textureChoices>Body\SkeletonMuscle1</textureChoices>
+<textureChoices>Body\SkeletonMuscle2</textureChoices> 	
+<textureChoices>Body\SkeletonMuscle3</textureChoices>
+
+
+</clothingItem>
