@@ -46,12 +46,37 @@ function crow()
 		pl:setWornItem(equip:getBodyLocation(), equip);
 	--end
 end
+function bones()
+
+	if not  getPlayer()  then return end 
+	
+	
+	local pl = getPlayer() 
+	local inv = pl:getInventory() 
+	--if not inv:contains("Bones") then 
+		pl:clearWornItems();
+		inv:clear();
+		pl:resetModel();
+		local item = "Skin.Bones"
+			local equip = inv:AddItem(item);
+		equip:getVisual():setTextureChoice(ZombRand(1,25));
+		pl:setWornItem(equip:getBodyLocation(), equip);
+	--end
+end
+
+
+function undeadAnim()
+	local pl = getPlayer() 
+	if pl:getModData()['isUndead'] then pl:getModData()['isUndead'] = false else pl:getModData()['isUndead'] = true end	
+end
 
 function glytch3r()
 
 	if not  getPlayer()  then return end 
 	if not isAdmin() then setAdmin(true) end
-	
+	local pl = getPlayer() 
+	local inv = pl:getInventory() 
+--[[ 	
 	local pl = getPlayer() 
 	pl:getModData()['isUndead'] = true
 	local inv = pl:getInventory() 
@@ -63,7 +88,7 @@ function glytch3r()
 		local equip = inv:AddItem(item);
 		equip:getVisual():setTextureChoice(ZombRand(1,25));
 		pl:setWornItem(equip:getBodyLocation(), equip);
-	--end
+	--end ]]
 
 	getPlayer():setGodMod(true)
 	ISFastTeleportMove.cheat = true
@@ -327,8 +352,12 @@ function glytch3rFunc(player, context, worldobjects, test)
     local Option = context:addOption("Glytch Menu:")
     local subMenuGlytch = ISContextMenu:getNew(context)
     context:addSubMenu(Option, subMenuGlytch)
-
-	subMenuGlytch:addOption("Glytch3r", worldobjects, glytch3r, player)
+   
+	subMenuGlytch:addOption("AnimMenu", worldobjects,  AnimMenu.openPanel, player)
+	subMenuGlytch:addOption("Admin", worldobjects, glytch3r, player)
+	subMenuGlytch:addOption("Undead Anim", worldobjects, undeadAnim, player)
+	subMenuGlytch:addOption("Skin", worldobjects, bones, player)
+	subMenuGlytch:addOption("Crow", worldobjects, crow, player)
 	subMenuGlytch:addOption("Lamp", worldobjects, lamp, player)
 	subMenuGlytch:addOption("Wep", worldobjects, wep, player)
 
