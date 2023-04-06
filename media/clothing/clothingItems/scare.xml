@@ -24,7 +24,7 @@
 	<m_Masks>14</m_Masks>
 	<m_Masks>15</m_Masks> 
 
-
+<!-- 
 
 <textureChoices>Body\crow\blank_invi</textureChoices>
 
@@ -39,8 +39,9 @@
 <textureChoices>Body\crow\colorful1</textureChoices> 
 <textureChoices>Body\crow\colorful2</textureChoices> 
 <textureChoices>Body\crow\colorful3</textureChoices>
-
-<textureChoices>Body\crow\etc1</textureChoices> 
+ -->
+<textureChoices>Body\crow\etc1</textureChoices>
+<!-- 
 <textureChoices>Body\crow\etc2</textureChoices> 
 <textureChoices>Body\crow\etc3</textureChoices>
 <textureChoices>Body\crow\etc4</textureChoices> 
@@ -57,6 +58,6 @@
 <textureChoices>Body\crow\SkeletonMuscle1</textureChoices>
 <textureChoices>Body\crow\SkeletonMuscle2</textureChoices> 	
 <textureChoices>Body\crow\SkeletonMuscle3</textureChoices>
-
+ -->
 
 </clothingItem>
