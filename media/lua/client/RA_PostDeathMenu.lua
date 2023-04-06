@@ -5,6 +5,7 @@
 -- from there
 
 require "ISUI/ISPostDeathUI"
+require "RA_InitPlayer"
 
 local og_ISPostDeathUICreateChildren = ISPostDeathUI.createChildren
 
@@ -24,11 +25,11 @@ function ISPostDeathUI:createChildren()
     self:setY(self.screenY + (self.screenHeight - 40 - totalHgt))
 
     local button
-    local dead_player = getPlayer()
-    local dead_player_body_damage = dead_player:getBodyDamage()
-    local ra_data = RA_GetRAData()
+    local deadPlayer = getPlayer()
+    local deadPlayerBodyDamage = deadPlayer:getBodyDamage()
+    local reanimationData = RA_Common.GetModData()
 
-    if dead_player_body_damage:isInfected() and not ra_data.is_zed  then
+    if deadPlayerBodyDamage:isInfected() and not reanimationData.is_zed  then
         button = ISButton:new(buttonX, buttonY, buttonWid, buttonHgt, getText("IGUI_PostDeath_RespawnAsZed"), self, self.onRespawnAsZed)
         self:configButton(button)
         self:addChild(button)
@@ -58,9 +59,6 @@ function ISPostDeathUI:createChildren()
 end
 
 
-RA_is_respawning_as_zed = false
-RA_player_items = {}
-
 -- Retrieve data from the old player after OnDeath and reapplies to a new one here
 function ISPostDeathUI:onRespawnAsZed()
     print("Respawning as zombie")
@@ -68,52 +66,47 @@ function ISPostDeathUI:onRespawnAsZed()
     -- TODO Reapply traits
     -- TODO Delete player zombie NPC
 
-    local old_player = getPlayer()
-    local old_player_cell = old_player:getCell()
+    local oldPlayer = getPlayer()
+    local oldPlayerCell = oldPlayer:getCell()
 
     -- Respawn in the same position
-    getWorld():setLuaSpawnCellX(old_player_cell:getWorldX())
-    getWorld():setLuaSpawnCellY(old_player_cell:getWorldY())
-    getWorld():setLuaPosX(old_player:getX())
-    getWorld():setLuaPosY(old_player:getY())
-    getWorld():setLuaPosZ(old_player:getZ())
+    getWorld():setLuaSpawnCellX(oldPlayerCell:getWorldX())
+    getWorld():setLuaSpawnCellY(oldPlayerCell:getWorldY())
+    getWorld():setLuaPosX(oldPlayer:getX())
+    getWorld():setLuaPosY(oldPlayer:getY())
+    getWorld():setLuaPosZ(oldPlayer:getZ())
 
     -- We need to generate a new CreateSurvivor whenever the game starts, and then reapply it
-    local new_player = SurvivorFactory.CreateSurvivor()
-    local is_female = old_player:isFemale()
+    local newPlayer = SurvivorFactory.CreateSurvivor()
+    local isFemale = oldPlayer:isFemale()
 
-    new_player:setFemale(is_female)
+    newPlayer:setFemale(isFemale)
 
-    local new_player_visual = new_player:getHumanVisual()
-    new_player_visual:clear()
-    new_player_visual:copyFrom(old_player:getHumanVisual())
+    local newPlayerVisual = newPlayer:getHumanVisual()
+    newPlayerVisual:clear()
+    newPlayerVisual:copyFrom(oldPlayer:getHumanVisual())
 
     -- Set zombie skin texture for the correct skin
-    local old_skin = old_player:getHumanVisual():getSkinTexture()
-    local new_skin_id = tonumber(string.match(old_skin, "0(%d)"))
+    local oldSkin = oldPlayer:getHumanVisual():getSkinTexture()
+    local newSkinId = tonumber(string.match(oldSkin, "0(%d)"))
 
-    local new_skin
-    if is_female then
-        new_skin = "F_"
-    else
+    local newSkin = isFemale and "F" or "M"
 
-        new_skin = "M_"
+    if newSkinId > 4 then
+        newSkinId = 4
     end
-
-    if new_skin_id > 4 then
-        new_skin_id = 4
-    end
-    new_skin = new_skin .. "ZedBody0" .. new_skin_id .. "_level1"
-    print("RA: new_skin " .. new_skin)
-    new_player_visual:setSkinTextureName(new_skin)
+    newSkin = newSkin .. "ZedBody0" .. newSkinId .. "_level1"
+    print("RA: newSkin = " .. newSkin)
+    newPlayerVisual:setSkinTextureName(newSkin)
 
     -- TODO Set a fake name to the user so that we can track him down when he reanimates
-    new_player:setForename("Test")     -- TODO This is wrong, it returns only Bob Smith
-    new_player:setSurname("Test 2")
+    newPlayer:setForename("Test")     -- TODO This is wrong, it returns only Bob Smith
+    newPlayer:setSurname("Test 2")
 
-    RA_is_respawning_as_zed = true
 
-    getWorld():setLuaPlayerDesc(new_player)        --Survivor_Desc is just fancy human visual
+    RA_Core.isRespawningAsZed = true
+
+    getWorld():setLuaPlayerDesc(newPlayer)        --Survivor_Desc is just fancy human visual
     getWorld():getLuaTraits():clear()
     MainScreen.instance.avatar = nil
     if ISPostDeathUI.instance[self.playerIndex] then
@@ -151,14 +144,16 @@ local function OnDeathSaveWornItems(player)
     -- TODO Add a check, this shouldn't be run when the player is not infected
 
 
-    local worn_items = player:getWornItems()
+    local wornItems = player:getWornItems()
     print("RA: Saving following worn items")
-    RA_player_items = {}
 
-    for i=0, worn_items:size()-1 do
-        local item = worn_items:getItemByIndex(i)
-        print("RA: Saving " ..tostring(i))
-        table.insert(RA_player_items, item)
+    RA_Respawn.playerItems = {}
+
+    for i=0, wornItems:size()-1 do
+        local item = wornItems:getItemByIndex(i)
+        print("RA: Saving " .. tostring(i))
+        table.insert(RA_Respawn.playerItems, item)
     end
 end
+
 Events.OnPlayerDeath.Add(OnDeathSaveWornItems)

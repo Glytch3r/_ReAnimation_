@@ -1,24 +1,17 @@
 
+RA_Common = RA_Common or {}
 
--- Get correct Reanimation Mod Data or creates it on the fly
-function RA_GetRAData()
-    local mod_data = getPlayer():getModData()
 
-    if mod_data.RA == nil then
-        mod_data.RA = {
-            is_zed = false,
-        }
+RA_Common.GetModData = function()
+    local modData = getPlayer():getModData()
+    if modData.RA == nil then
+        modData.RA = {isZed = false}
     end
 
-    return mod_data.RA
+    return modData.RA
 end
 
-function RA_StartNewAnimation(player, anim_var)
-
-    player:setVariable(anim_var, "true")
-
-
-    -- Notifies to server
-    sendClientCommand(player, "RA", "NotifyAnimation", { sender = player:getOnlineID(), anim = anim_var })
-
+RA_Common.StartAnimation = function(player, animVar)
+    player:setVariable(animVar, "true")
+    sendClientCommand(player, "RA", "NotifyAnimation", { sender = player:getOnlineID(), anim = animVar })
 end

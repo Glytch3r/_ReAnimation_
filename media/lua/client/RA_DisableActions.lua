@@ -1,8 +1,7 @@
+require "RA_Core"
 
 
-
-
-RA_DisableMapActions = function()
+RA_Core.DisableMapActions = function()
     -- Removes some keybinds to prevent player from using the map
     Events.OnKeyStartPressed.Remove(ISWorldMap.onKeyStartPressed)
     Events.OnKeyKeepPressed.Remove(ISWorldMap.onKeyKeepPressed)
@@ -10,9 +9,8 @@ RA_DisableMapActions = function()
     ISWorldMap.isAllowed = false
 end
 
-RA_DisableVariousClickInteractions = function()
+RA_Core.DisableClickInteractions = function()
     function ISObjectClickHandler.doClickSpecificObject(object, playerNum, playerObj)
-
         return false
     end
     function ISOpenCloseCurtain:isValid()
@@ -26,7 +24,7 @@ RA_DisableVariousClickInteractions = function()
     end
 end
 
-RA_DisableHotbarUsage = function()
+RA_Core.DisableHotbar = function()
     -- Hotbar override
     ISHotbar.onKeyStartPressed = function(key) return end
     ISHotbar.onKeyPressed = function(key) return end
@@ -68,7 +66,7 @@ local function CheckForInteractable(dir, player)
 
 end
 
-RA_DisableDoorAndWindowInteraction = function(player)
+RA_Core.DisableDoorAndWindowInteraction = function(player)
     if key == 18 then
 
         if getCell():getDrag(player:getPlayerNum()) then return end     -- TODO What does this do?
