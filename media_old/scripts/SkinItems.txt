@@ -21,6 +21,25 @@ module Skin {
 		Icon = Bones_ico,		
 		
 	}		
-
-
+	
+	item Deformed
+	{
+       DisplayCategory = Clothing,		
+		Type = Clothing,
+		DisplayName = Deformed,
+		ClothingItem = deformed,
+		BodyLocation = Torso1Legs1, 
+		Icon = Bones_ico,		
+		
+	}		
+	item Science
+	{
+       DisplayCategory = Clothing,		
+		Type = Clothing,
+		DisplayName = Science,
+		ClothingItem = science,
+		BodyLocation = Torso1Legs1, 
+		Icon = Bones_ico,		
+		
+	}		
 }

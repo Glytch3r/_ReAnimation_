@@ -3,45 +3,54 @@
 -------------------------------
 -- Initialization manager for a new zed player
 
+RA_Respawn = {}
+
+RA_Respawn.isRespawningAsZed = false
+RA_Respawn.playerItems = {}
+
+
 
 -- Manages normal login
-local function OnCreatePlayerLogin(player_index, player)
+local function OnCreatePlayerLogin(playerIndex, player)
 
-    local ra_data = RA_GetRAData()
-    if ra_data.is_zed then
+    local reanimationData = RA_Common.GetModData()
+    if reanimationData.isZed then
 
         player:setZombiesDontAttack(true)
-        player:setInvisible(true)
+        player:setInvisible(true)       -- Invisibility is enough to be visibile to players but not to zombies.
         player:setCanShout(false)
 
-        -- Override to some actions such as opening the door via click. Interacting via E key is managed through other methods
-        RA_DisableMapActions()
-        RA_DisableVariousClickInteractions()
-        RA_DisableHotbarUsage()
+        --[[
+            Overrides some actions, such as opening the door via click.
+            Interacting via the E key is managed through other methods
+        ]]
+        RA_Core.DisableMapActions()
+        RA_Core.DisableClickInteractions()
+        RA_Core.DisableHotbar()
 
-        Events.OnKeyPressed.Add(RA_DisableDoorAndWindowInteraction)
+        Events.OnKeyPressed.Add(RA_Core.DisableDoorAndWindowInteraction)
 
 
         -- Starts a OnTick function to manage the zed
-        RA_StartPlayerZedUpdate()
+        RA_Core.StartZedPlayerUpdate()
         --AddZedFists()               -- TODO remove this
     end
 
 end
+
 Events.OnCreatePlayer.Add(OnCreatePlayerLogin)
 
 -- Manages creation of a new Zed Player (as in, just respawned as a zombie)
-local function OnCreateNewZedPlayer(player_index, player)
+local function OnCreateNewZedPlayer(playerIndex, player)
 
-    if RA_is_respawning_as_zed then
-        local old_player_items = RA_player_items
-        local player_inv = player:getInventory()
+    if RA_Respawn.isRespawningAsZed then
+        local playerInv = player:getInventory()
 
         -- Reapplies the old worn items to the new player
-        for _, v in pairs(old_player_items) do
-            if string.find(v:getFullType(), "Belt") ~= true then
-                local new_item = player_inv:AddItem(v)
-                player:setWornItem(new_item:getBodyLocation(), new_item)
+        for _, item in pairs(RA_Respawn.playerItems) do
+            if string.find(item:getFullType(), "Belt") ~= true then
+                local newItem = playerInv:AddItem(item)
+                player:setWornItem(newItem:getBodyLocation(), newItem)
             end
         end
 
@@ -63,17 +72,18 @@ local function OnCreateNewZedPlayer(player_index, player)
         end
 
         -- Reset this stuff
-        RA_is_respawning_as_zed = false
-        RA_player_items = nil
+        RA_Respawn.isRespawningAsZed = false
+        RA_Respawn.playerItems = nil
 
         -- Set is_zed to true
-        local ra_data = RA_GetRAData()
-        ra_data.is_zed = true
+        local reanimationData = RA_Common.GetModData()
+        reanimationData.isZed = true
 
         -- Startup the player with the remaining stuff
         OnCreatePlayerLogin(_, player)
     end
 
 end
+
 Events.OnCreatePlayer.Add(OnCreateNewZedPlayer)
 
